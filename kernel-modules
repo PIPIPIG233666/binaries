@@ -27,6 +27,7 @@ r='git read-tree --prefix'
 rm='https://source.codeaurora.org/quic/la/platform/vendor'
 rma='git remote add caf'
 sa='git subtree add --prefix'
+tp='tp'
 uf='-u FETCH_HEAD'
 wl=$qc-$os/wlan
 
@@ -97,26 +98,35 @@ if [ $num = '1' ]; then
     dir=$ds/$mod
     elif [ $num = '4' ]; then
     mod=audio-kernel
-    dir=techpack/audio
+    dir=$tp/audio
+    elif [ $num = '5' ]; then
+    mod=data-kernel
+    dir=$tp/data
+    elif [ $num = '6' ]; then
+    mod=camera-kernel
+    dir=$tp/camera
     else die "Invalid target input, aborting!"
 fi
 }
 
 # Add remote
 function addremote() {
-    if [ $num -ne '4' ]; then
+    if [ $num -ne '4' ] && [ $num -ne '5' ] && [ $num -ne '6' ]; then
     $rma/$mod $rm/$wl/$mod
-    else $rma/$mod $rm/$os/$mod
+    elif [ $num -eq '5' ]; then
+    $rma/$mod $rm/$qc-$os/$mod
+    elif [ $num -eq '4' ] || [ $num -eq '6' ] ; then
+    $rma/$mod $rm/$os/$mod
     fi
 }
 
 # Initialize
 function init() {
 header "Available modules"
-info "1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel"
+info "1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel\n5.data-kernel\n6.camera-kernel"
 read -p "Target kernel module: " num
 case $num in 
-    1 | 2 | 3 | 4)
+    1 | 2 | 3 | 4 | 5 | 6)
     read -p "Target tag / branch: " br
     read -p "Import (i) / Update (u): " option
     if [ $option != u ]; then
@@ -131,19 +141,19 @@ function import() {
     addremote
     success "Add remote for target module ${mod} done."
     case $mod in
-        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel)
         readcmd
         success "Import from target ${br} for target ${mod} done."
-        esac
+    esac
 }
 
 # Update modules
 function update() {
-        case $mod in
-        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
+    case $mod in
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel)
         readcmd
         success "Update to target ${br} for target module ${mod} done."
-        esac
+    esac
 }
 
 # Process import or update
