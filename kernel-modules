@@ -3,8 +3,15 @@
 # Copyright (C) 2020 Pig <pig.priv@gmail.com>
 #
 # Simple script to import/update kernel modules
-# Version 0.2
+# Version 0.3
 #
+
+# Colors for script
+BOLD="\033[1m"
+GRN="\033[01;32m"
+RED="\033[01;31m"
+RST="\033[0m"
+YLW="\033[01;33m"
 
 # Aliases
 cai='git commit --amend --no-edit'
@@ -22,15 +29,63 @@ rma='git remote add caf'
 sa='git subtree add --prefix'
 uf='-u FETCH_HEAD'
 wl=$qc-$os/wlan
-echo -e "Available modules:\n1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel"
-read -p "The name of kernel module u want: " num
-case $num in 
-    1|2|3|4)
-    read -p "The git cmd u want to use: merge (m) / subtree (s) " cmd
-    read -p "The tag/br of module: " br
-    read -p "Import (i) / Update (u)): " option
-esac
 
+# Alias for echo to handle escape codes like colors
+function echo() {
+    command echo -e "$@"
+}
+
+# Prints a formatted header to point out what is being done to the user
+function header() {
+    if [[ -n ${2} ]]; then
+        COLOR=${2}
+    else
+        COLOR=${RED}
+    fi
+    echo "${COLOR}"
+    # shellcheck disable=SC2034
+    echo "====$(for i in $(seq ${#1}); do echo "=\c"; done)===="
+    echo "==  ${1}  =="
+    # shellcheck disable=SC2034
+    echo "====$(for i in $(seq ${#1}); do echo "=\c"; done)===="
+    echo "${RST}"
+}
+
+# Prints an error in bold red
+function die() {
+    echo "${RED}${1}${RST}"
+    [[ ${2} = "-h" ]] && ${0} -h
+    exit 1
+}
+
+# Prints a statement in bold green
+function success() {
+    echo "${GRN}${1}${RST}"
+    [[ -z ${2} ]] && echo
+}
+
+# Prints an info in bold yellow
+function info() {
+    echo
+    echo "${YLW}${1}${RST}"
+    [[ -z ${2} ]] && echo
+}
+
+# Read git cmd
+function readcmd() {
+    if [ $cmd = 's' ]; then
+    $f/$mod $br && $sa=$dir caf/$mod $br && $cai
+    elif [ $cmd = 'm' ]; then
+    if [ $option = 'u' ]; then
+      $f/$mod $br && $ms=$dir $fn
+    else $f/$mod $br && $mo && $r=$dir $uf && $ci
+    fi
+    else die "Invalid target cmd, aborting!"
+    fi
+}
+
+# Indicate module directories
+function indicatemodir() {
 if [ $num = '1' ]; then
     mod=qcacld-3.0
     dir=$ds/$mod
@@ -43,36 +98,69 @@ if [ $num = '1' ]; then
     elif [ $num = '4' ]; then
     mod=audio-kernel
     dir=techpack/audio
-    else echo "Invalid input, aborting!"
+    else die "Invalid target input, aborting!"
 fi
+}
 
-case $option in
-    import | i)
-        if [ $num -ne '4' ]; then
-        $rma/$mod $rm/$wl/$mod
-        else $rma/$mod $rm/$mod
-        fi
-        echo "Add remote for module" $mod "done."
-        case $mod in
-            qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
-            if [ $cmd = 's' ]; then
-            $f/$mod $br && $sa=$dir caf/$mod $br && $cai
-            elif [ $cmd = 'm' ]; then
-            $f/$mod $br && $mo && $r=$dir $uf && $ci
-            else echo "Invalid cmd, aborting!"
-            fi
-            ;;
-            esac
-            echo "Import from" $br "for" $mod "done."
-            ;;
-        update | u)
-        case $mod in
-            qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
-                $f/$mod $br && $ms=$dir $fn
-                echo "Update to "$br "for module "$mod "done."
+# Add remote
+function addremote() {
+    if [ $num -ne '4' ]; then
+    $rma/$mod $rm/$wl/$mod
+    else $rma/$mod $rm/$os/$mod
+    fi
+}
+
+# Initialize
+function init() {
+header "Available modules"
+info "1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel"
+read -p "Target kernel module: " num
+case $num in 
+    1 | 2 | 3 | 4)
+    read -p "Target tag / branch: " br
+    read -p "Import (i) / Update (u): " option
+    if [ $option != u ]; then
+    read -p "Target cmd: merge (m) subtree (s) " cmd
+    else cmd=m
+    fi
+esac
+}
+
+# Import modules
+function import() {
+    addremote
+    success "Add remote for target module ${mod} done."
+    case $mod in
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
+        readcmd
+        success "Import from target ${br} for target ${mod} done."
         esac
+}
+
+# Update modules
+function update() {
+        case $mod in
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel)
+        readcmd
+        success "Update to target ${br} for target module ${mod} done."
+        esac
+}
+
+# Process import or update
+function process() {
+    case $option in
+        i)
+        import
+        ;;
+        u)
+        update
         ;;
         *)
-            echo "Invalid option, aborting!"
+        die "Invalid target option, aborting!"
         ;;
-esac
+    esac
+}
+
+init
+indicatemodir
+process
