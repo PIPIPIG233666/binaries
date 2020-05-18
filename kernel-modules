@@ -27,7 +27,7 @@ r='git read-tree --prefix'
 rm='https://source.codeaurora.org/quic/la/platform/vendor'
 rma='git remote add caf'
 sa='git subtree add --prefix'
-tp='tp'
+tp='techpack'
 uf='-u FETCH_HEAD'
 wl=$qc-$os/wlan
 
@@ -43,13 +43,8 @@ function header() {
     else
         COLOR=${RED}
     fi
-    echo "${COLOR}"
     # shellcheck disable=SC2034
-    echo "====$(for i in $(seq ${#1}); do echo "=\c"; done)===="
-    echo "==  ${1}  =="
-    # shellcheck disable=SC2034
-    echo "====$(for i in $(seq ${#1}); do echo "=\c"; done)===="
-    echo "${RST}"
+    echo "${COLOR}\n====$(for i in $(seq ${#1}); do echo "=\c"; done)====\n==  ${1}  ==\n====$(for i in $(seq ${#1}); do echo "=\c"; done)====\n${RST}"
 }
 
 # Prints an error in bold red
@@ -89,13 +84,10 @@ function readcmd() {
 function indicatemodir() {
 if [ $num = '1' ]; then
     mod=qcacld-3.0
-    dir=$ds/$mod
     elif [ $num = '2' ]; then
     mod=qca-wifi-host-cmn
-    dir=$ds/$mod
     elif [ $num = '3' ]; then
     mod=fw-api
-    dir=$ds/$mod
     elif [ $num = '4' ]; then
     mod=audio-kernel
     dir=$tp/audio
@@ -107,11 +99,15 @@ if [ $num = '1' ]; then
     dir=$tp/camera
     else die "Invalid target input, aborting!"
 fi
+
+if [ $num -eq '1' ] || [ $num -eq '2' ] || [ $num -eq '3' ]; then
+    dir=$ds/$mod
+fi
 }
 
 # Add remote
 function addremote() {
-    if [ $num -ne '4' ] && [ $num -ne '5' ] && [ $num -ne '6' ]; then
+    if [ $num -eq '1' ] || [ $num -eq '2' ] || [ $num -eq '3' ]; then
     $rma/$mod $rm/$wl/$mod
     elif [ $num -eq '5' ]; then
     $rma/$mod $rm/$qc-$os/$mod
