@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Colors for script
+BOLD="\033[1m"
+GRN="\033[01;32m"
+RED="\033[01;31m"
+RST="\033[0m"
+YLW="\033[01;33m"
+
+function repopick(){
+repopick -q
+}
+
+# Alias for echo to handle escape codes like colors
+function echo() {
+    command echo -e "$@"
+}
+
+# Prints a formatted header to point out what is being done to the user
+function header() {
+    if [[ -n ${2} ]]; then
+        COLOR=${2}
+    else
+        COLOR=${RED}
+    fi
+    # shellcheck disable=SC2034
+    echo "${COLOR}\n====$(for i in $(seq ${#1}); do echo "=\c"; done)====\n==  ${1}  ==\n====$(for i in $(seq ${#1}); do echo "=\c"; done)====\n${RST}"
+}
+
+# Prints an error in bold red
+function die() {
+    echo "${RED}${1}${RST}"
+    [[ ${2} = "-h" ]] && ${0} -h
+    exit 1
+}
+
+# Prints a statement in bold green
+function success() {
+    echo "${GRN}${1}${RST}"
+    [[ -z ${2} ]] && echo
+}
+
+# Prints an info in bold yellow
+function info() {
+    echo
+    echo "${YLW}${1}${RST}"
+    [[ -z ${2} ]] && echo
+}
+
