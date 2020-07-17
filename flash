@@ -5,6 +5,7 @@ source ~/bin/helper
 header "Flash boot/dtbo? (y/n)"
 read -r option
 if [ $option = 'y' ];then
+cd ~/out/
 init_adb_connection
 adb reboot bootloader
 if [ -f boot.img ] ;then
