@@ -11,7 +11,7 @@ command make O=~/out \
   ARCH=arm64 \
   vendor/lineage_davinci_defconfig
 
-export PATH=~/toolchain/clang/clang-r353983c1/bin:~/toolchain/gcc-64/bin:~/toolchain/gcc-32/bin/:${PATH}
+export PATH=~/bin/toolchain/clang/clang-r353983c1/bin:~/bin/toolchain/gcc-64/bin:~/bin/toolchain/gcc-32/bin/:${PATH}
 
 command make -j4 O=~/out \
   ARCH=arm64 \
