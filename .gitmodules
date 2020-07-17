@@ -1,3 +1,6 @@
 [submodule "mkbootimg"]
 	path = mkbootimg
 	url = git@github.com:osm0sis/mkbootimg.git
+[submodule "jadx"]
+	path = jadx
+	url = git@github.com:skylot/jadx.git

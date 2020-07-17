@@ -9,10 +9,13 @@ Either clone this repo or run the following command in the root of your kernel f
 
 #### build-kernel
 This one builds the kernel. The output directory is ~/out.
-## mkbootimg
+#### mkbootimg
 Submodule containing mkbootimg and unpackbootimg.
-## mkdtimg
+#### mkdtimg
 Executable striped from lastet platform release.
 
 #### helper
 Several nice functions kanged from android-linux-stable and LineageOS.
+
+#### jadx
+Java decompiler from Mr. skylot.
