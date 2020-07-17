@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source ~/bin/helper
+
+header "Flash boot/dtbo? (y/n)"
+read -r option
+if [ $option = 'y' ];then
+init_adb_connection
+adb reboot bootloader
+if [ -f boot.img ] ;then
+  fastboot flash boot boot.img
+fi
+if [ -f dtbo-pre.img ] ;then
+  fastboot flash dtbo dtbo-pre.img
+fi
+  fastboot reboot
+else die "Abort flashing"
+fi

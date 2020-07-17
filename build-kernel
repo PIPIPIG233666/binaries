@@ -49,3 +49,5 @@ header "Build Completed in:"
 DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 success "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
+
+~/bin/flash

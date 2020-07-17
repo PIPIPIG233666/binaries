@@ -11,6 +11,43 @@ function repopick(){
 repopick -q
 }
 
+function _adb_connected {
+    {
+        if [[ "$(adb get-state)" == device ]]
+        then
+            return 0
+        fi
+    } 2>/dev/null
+
+    return 1
+};
+
+
+function init_adb_connection() {
+    adb start-server # Prevent unexpected starting server message from adb get-state in the next line
+    if ! _adb_connected; then
+        echo "No device is online. Waiting for one..."
+        echo "Please connect USB and/or enable USB debugging"
+        until _adb_connected; do
+            sleep 1
+        done
+        echo "Device Found."
+    fi
+
+    # Retrieve IP and PORT info if we're using a TCP connection
+    TCPIPPORT=$(adb devices | egrep '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+[^0-9]+' \
+        | head -1 | awk '{print $1}')
+    adb root &> /dev/null
+    sleep 0.3
+    if [ -n "$TCPIPPORT" ]; then
+        # adb root just killed our connection
+        # so reconnect...
+        adb connect "$TCPIPPORT"
+    fi
+    adb wait-for-device &> /dev/null
+    sleep 0.3
+}
+
 # Alias for echo to handle escape codes like colors
 function echo() {
     command echo -e "$@"
