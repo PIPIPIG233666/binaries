@@ -7,6 +7,8 @@ DATE_START=$(date +"%s")
 export OS="10.0.0"
 export SPL="2020-07"
 
+rm -rf ~/out/arch/arm64/boot/dts/xiaomi/
+
 command make O=~/out \
   ARCH=arm64 \
   vendor/lineage_davinci_defconfig
