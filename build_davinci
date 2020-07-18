@@ -58,7 +58,6 @@ changes=(
 266130 # FODCircleView: Add Support for custom FP pressed icon
 280082 # FingerprintService: hide InDisplayFingerprintView on Error
 276156 # sdm: mark FOD pressed layer by setting a bit on ZPOS
-279890 # Allow to drop existing fd cache of cgroup path
 281412 # SystemUI: Don't re add brightness slider if its already present
 )
 repopick ${changes[@]}&
@@ -69,7 +68,6 @@ clear
 function pull() {
 repopick -p 278063 # hal: Add tfa98xx feedback extension
 repopick -p 277176 # VolumeDialog: Implement expand/collapse animation
-repopick -p 279893 # [DNM] Enable USAP by default
 repopick -p 275821 # interfaces: Fix blueprint generation
 repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
 repopick -p 277273 # MediaProvider: Check hidden directories recursively
