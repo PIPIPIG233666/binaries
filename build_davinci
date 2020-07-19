@@ -78,6 +78,7 @@ clear
 
 function topic() {
 repopick -t ten-firewall
+repopick -t xiaomi-power-hal
 info "Picking topics from gerrit..."
 clear
 }
