@@ -14,7 +14,7 @@ ci='git commit --no-edit'
 ds='drivers/staging'
 f='git fetch caf'
 fn='FETCH_HEAD --no-edit'
-mo='git merge --allow-unrelated-histories -s ours --no-commit FETCH_HEAD'
+mo='git merge --allow-unrelated-histories -s ours --no-commit --log=10000000'
 ms='git merge -X subtree'
 os='opensource'
 qc='qcom'
@@ -29,11 +29,11 @@ wl=$qc-$os/wlan
 # Read git cmd
 function readcmd() {
     if [ $cmd = 's' ]; then
-    $f/$mod $br && $sa=$dir caf/$mod $br && $cai
+    $f/$mod $br:caf/$mod/$br && $sa=$dir caf/$mod/$br && $cai
     elif [ $cmd = 'm' ]; then
     if [ $option = 'u' ]; then
-      $f/$mod $br && $ms=$dir $fn
-    else $f/$mod $br && $mo && $r=$dir $uf && $ci
+      $f/$mod $br:caf/$mod/$br && $ms=$dir caf/$mod/$br --no-edit
+    else $f/$mod $br && $mo caf/$mod/$br && $r=$dir $uf && $ci
     fi
     else die "Invalid target cmd, aborting!"
     fi
