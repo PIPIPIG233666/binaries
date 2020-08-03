@@ -67,7 +67,6 @@ clear
 
 function pull() {
 repopick -p 278063 # hal: Add tfa98xx feedback extension
-repopick -p 277176 # VolumeDialog: Implement expand/collapse animation
 repopick -p 275821 # interfaces: Fix blueprint generation
 repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
 repopick -p 277273 # MediaProvider: Check hidden directories recursively
