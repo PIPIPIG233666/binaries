@@ -8,6 +8,7 @@ mka installclean
 }
 
 function buildsigned() {
+source build/envsetup.sh
 mka target-files-package otatools -j$( nproc --all )
 
 ./build/tools/releasetools/sign_target_files_apks -o -d ~/.android-certs \
