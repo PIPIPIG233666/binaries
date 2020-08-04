@@ -57,16 +57,19 @@ changes=(
 272303 # DozeSensors: only use proximity sensor if supported
 266130 # FODCircleView: Add Support for custom FP pressed icon
 280082 # FingerprintService: hide InDisplayFingerprintView on Error
-276156 # sdm: mark FOD pressed layer by setting a bit on ZPOS
 281412 # SystemUI: Don't re add brightness slider if its already present
 )
 repopick ${changes[@]}&
 info "Picking separate commits from gerrit..."
 clear
+changes=(
+repopick 276156 # sdm: mark FOD pressed layer by setting a bit on ZPOS 
+)
+repopick -P hardware/qcom-caf/sm8150/display ${changes[@]}&
 }
 
 function pull() {
-repopick -p 278063 # hal: Add tfa98xx feedback extension
+repopick -p 278063 -P hardware/qcom-caf/sm8150/audio # hal: Add tfa98xx feedback extension
 repopick -p 275821 # interfaces: Fix blueprint generation
 repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
 repopick -p 277273 # MediaProvider: Check hidden directories recursively
@@ -77,6 +80,7 @@ clear
 function topic() {
 repopick -t ten-firewall
 repopick -t xiaomi-power-hal
+repopick -t android-10.0.0_r41
 info "Picking topics from gerrit..."
 clear
 }
