@@ -11,7 +11,7 @@ Either clone this repo or run the following command in the root of your kernel f
 This one builds the kernel. The output directory is ~/out.
 #### mkbootimg
 Submodule containing mkbootimg and unpackbootimg.
-#### mkdtimg
+#### mkdtboimg
 Executable striped from lastet platform release.
 
 #### helper
