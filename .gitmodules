@@ -10,3 +10,6 @@
 [submodule "toolchain/gcc-64"]
 	path = toolchain/gcc-64
 	url = git@github.com:LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git
+[submodule "libufdt"]
+	path = libufdt
+	url = https://android.googlesource.com/platform/system/libufdt
