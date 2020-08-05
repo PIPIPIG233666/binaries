@@ -44,12 +44,13 @@ find ~/out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > /tmp/${device}.dtb
     --dtb            /tmp/${device}.dtb \
     --os_version     $OS \
     --os_patch_level $SPL \
-    --header_version 1 \
     -o ~/out/boot.img
 
 file  ~/out/boot.img
 
-~/bin/mkdtimg create ~/out/dtbo-pre.img \
+command virtualenv2 venv
+source venv/bin/activate
+~/bin/libufdt/utils/src/mkdtboimg.py create ~/out/dtbo-pre.img \
   --page_size=4096 \
   `find ~/out/arch/arm64/boot/dts/xiaomi \
   -type f -name '*.dtbo' | sort`
