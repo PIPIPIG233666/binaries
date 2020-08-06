@@ -24,7 +24,7 @@ command make O=~/out \
   ARCH=arm64 \
   vendor/lineage_${device}_defconfig
 
-export PATH=~/bin/toolchain/clang/clang-r353983c1/bin:~/bin/toolchain/gcc-64/bin:~/bin/toolchain/gcc-32/bin/:${PATH}
+export PATH=~/bin/toolchain/clang/clang-r353983c1/bin:~/bin/toolchain/gcc-64/bin:~/bin/toolchain/gcc-32/bin/:~/bin/toolchain/dtc:${PATH}
 
 command make -j4 O=~/out \
   ARCH=arm64 \
@@ -32,6 +32,7 @@ command make -j4 O=~/out \
   CLANG_TRIPLE=aarch64-linux-gnu- \
   CROSS_COMPILE=aarch64-linux-android- \
   CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+  DTC_EXT=dtc \
   2>&1 | tee ~/${log}
 
 find ~/out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > /tmp/${device}.dtb
