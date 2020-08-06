@@ -19,3 +19,7 @@ Several nice functions kanged from android-linux-stable and LineageOS.
 
 #### jadx
 Java decompiler from Mr. skylot.
+
+#### addcopyright
+Script for adding LineageOS copyright to device tree source files.
+This also converts all tabs to spaces.

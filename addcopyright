@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Usage: addcopyright $device $ board
+#
+
+device=$1
+board=$2
+str="/*\n * Copyright (C) 2020 The LineageOS Project\n *\n * this file is for attribution only of ${device}\n * And public attribution of Xiaomi platforms (like ${board} and so)\n */\n"
+sed -i "1s|^|${str}\n|" `find -name "${device}*.dtsi"`
+sed -i 's/\t/    /g' `find -name "${device}*dtsi"`
+
