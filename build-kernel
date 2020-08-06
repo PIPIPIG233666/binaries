@@ -5,6 +5,8 @@
 device="$1"
 log="$2"
 
+virtualenv2 venv
+source venv/bin/activate
 source ~/bin/helper
 export USE_CCACHE=1
 /usr/bin/ccache -M 20G
@@ -47,9 +49,7 @@ find ~/out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > /tmp/${device}.dtb
     -o ~/out/boot.img
 
 file  ~/out/boot.img
-
-command virtualenv2 venv
-source venv/bin/activate
+ 
 ~/bin/libufdt/utils/src/mkdtboimg.py create ~/out/dtbo-pre.img \
   --page_size=4096 \
   `find ~/out/arch/arm64/boot/dts/xiaomi \
