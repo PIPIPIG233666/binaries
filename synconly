@@ -1,43 +1,7 @@
 #!/bin/bash
 
 source ~/bin/helper
-
-function setup() {
 source build/envsetup.sh
-mka installclean
-}
-
-function buildsigned() {
-mka target-files-package otatools -j$( nproc --all )
-
-./build/tools/releasetools/sign_target_files_apks -o -d ~/.android-certs \
-    $OUT/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip \
-    signed-target_files.zip
-
-./build/tools/releasetools/ota_from_target_files -k ~/.android-certs/releasekey \
-    --block --backup=true \
-    signed-target_files.zip \
-    signed-ota_update.zip
-
-mv signed-ota_update.zip /home/builder/dl/losq/davinci/lineage-17.1-$(date +%F | sed s@-@@g)-UNOFFICIAL-davinci.zip
-}
-
-function buildbacon() {
-mka bacon -j
-}
-
-function buildtype() {
-info "Do you want a signed build?"
-read -p "options: (yes/no)" option
-case $option in
-  y | Y | yes | Yes)
-    buildsigned
-    ;;
-  n | N | no | No)
-    buildbacon
-    ;;
-esac
-}
 
 function sync() {
 repo sync -q -j$( nproc --all ) --force-sync --force-remove-dirty -c --no-clone-bundle --no-tags --optimized-fetch --prune 
@@ -73,6 +37,7 @@ repopick -p 278063 -P hardware/qcom-caf/sm8150/audio # hal: Add tfa98xx feedback
 repopick -p 275821 # interfaces: Fix blueprint generation
 repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
 repopick -p 277273 # MediaProvider: Check hidden directories recursively
+repopick -p 282518 # Launcher3: improve protected app names style
 info "Pulling commits from gerrit..."
 clear
 }
@@ -81,6 +46,7 @@ function topic() {
 repopick -t ten-firewall
 repopick -t xiaomi-power-hal
 repopick -t android-10.0.0_r41
+repopick -t ten-dtbo
 info "Picking topics from gerrit..."
 clear
 }
@@ -99,7 +65,6 @@ success "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 success
 }
 
-setup
 sync
 fetch
 pick

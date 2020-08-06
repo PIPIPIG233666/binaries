@@ -1,12 +1,13 @@
 #!/bin/bash
 
+sync=$1
 source ~/bin/helper
 
-function setup() {
 source build/envsetup.sh
-mka installclean
-}
 
+# export KBUILD_BUILD_USER=Peppa
+# export KBUILD_BUILD_HOST=Peppa-Pig
+# export TARGET_UNOFFICIAL_BUILD_ID=Pig
 function buildsigned() {
 source build/envsetup.sh
 mka target-files-package otatools -j$( nproc --all )
@@ -20,7 +21,7 @@ mka target-files-package otatools -j$( nproc --all )
     signed-target_files.zip \
     signed-ota_update.zip
 
-mv signed-ota_update.zip /home/builder/dl/losq/davinci/lineage-17.1-$(date +%F | sed s@-@@g)-UNOFFICIAL-davinci.zip
+#mv signed-ota_update.zip /home/builder/dl/losq/davinci/lineage-17.1-$(date +%F | sed s@-@@g)-UNOFFICIAL-Pig-davinci.zip
 }
 
 function buildbacon() {
@@ -41,6 +42,7 @@ esac
 }
 
 function build() {
+mka installclean
 clear
 
 DATE_START=$(date +"%s")
@@ -54,5 +56,9 @@ success "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 success
 }
 
+if [ -s $sync ]; then
+build
+else
 source ~/bin/synconly
 build
+fi
