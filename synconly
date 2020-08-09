@@ -45,8 +45,8 @@ clear
 function topic() {
 repopick -t ten-firewall
 repopick -t xiaomi-power-hal
-repopick -t android-10.0.0_r41
 repopick -t ten-dtbo
+repopick -t screen-off-fod
 info "Picking topics from gerrit..."
 clear
 }

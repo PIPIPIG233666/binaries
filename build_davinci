@@ -1,13 +1,15 @@
 #!/bin/bash
+# Usage: build_davinci sync
+#
 
 sync=$1
 source ~/bin/helper
 
 source build/envsetup.sh
 
-# export KBUILD_BUILD_USER=Peppa
-# export KBUILD_BUILD_HOST=Peppa-Pig
-# export TARGET_UNOFFICIAL_BUILD_ID=Pig
+#export KBUILD_BUILD_USER=Peppa
+#export KBUILD_BUILD_HOST=Peppa-Pig
+#export TARGET_UNOFFICIAL_BUILD_ID=Pig
 function buildsigned() {
 source build/envsetup.sh
 mka target-files-package otatools -j$( nproc --all )
@@ -42,6 +44,7 @@ esac
 }
 
 function build() {
+lunch
 mka installclean
 clear
 
