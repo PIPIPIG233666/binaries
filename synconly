@@ -10,7 +10,6 @@ repo sync -q -j$( nproc --all ) --force-sync --force-remove-dirty -c --no-clone-
 function fetch() {
 git -C device/xiaomi/davinci/ fetch -q https://github.com/sm6150-dev/android_device_xiaomi_davinci && git -C device/xiaomi/davinci/ checkout FETCH_HEAD
 git -C device/xiaomi/sm6150-common/ fetch -q https://github.com/sm6150-dev/android_device_xiaomi_sm6150-common && git -C device/xiaomi/sm6150-common/ checkout FETCH_HEAD
-git -C kernel/xiaomi/sm6150/ fetch -q https://github.com/sm6150-dev/android_kernel_xiaomi_sm6150 && git -C kernel/xiaomi/sm6150/ checkout FETCH_HEAD
 info "Fetching latest sm6150-dev source..."
 clear
 }
