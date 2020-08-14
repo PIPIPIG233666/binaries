@@ -17,10 +17,10 @@ clear
 function pick() {
 set -e
 changes=(
-272303 # DozeSensors: only use proximity sensor if supported
+#272303 # DozeSensors: only use proximity sensor if supported
 266130 # FODCircleView: Add Support for custom FP pressed icon
-280082 # FingerprintService: hide InDisplayFingerprintView on Error
-281412 # SystemUI: Don't re add brightness slider if its already present
+#280082 # FingerprintService: hide InDisplayFingerprintView on Error
+#281412 # SystemUI: Don't re add brightness slider if its already present
 )
 repopick ${changes[@]}&
 info "Picking separate commits from gerrit..."
@@ -33,18 +33,18 @@ repopick -P hardware/qcom-caf/sm8150/display ${changes[@]}&
 
 function pull() {
 repopick -p 278063 -P hardware/qcom-caf/sm8150/audio # hal: Add tfa98xx feedback extension
-repopick -p 275821 # interfaces: Fix blueprint generation
-repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
-repopick -p 277273 # MediaProvider: Check hidden directories recursively
+#repopick -p 275821 # interfaces: Fix blueprint generation
+#repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
+#repopick -p 277273 # MediaProvider: Check hidden directories recursively
 repopick -p 282518 # Launcher3: improve protected app names style
 info "Pulling commits from gerrit..."
 clear
 }
 
 function topic() {
-repopick -t ten-firewall
-repopick -t xiaomi-power-hal
-repopick -t ten-dtbo
+#repopick -t ten-firewall
+#repopick -t xiaomi-power-hal
+#repopick -t ten-dtbo
 repopick -t screen-off-fod
 info "Picking topics from gerrit..."
 clear
