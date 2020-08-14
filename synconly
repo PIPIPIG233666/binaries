@@ -25,10 +25,6 @@ changes=(
 repopick ${changes[@]}&
 info "Picking separate commits from gerrit..."
 clear
-changes=(
-276156 # sdm: mark FOD pressed layer by setting a bit on ZPOS 
-)
-repopick -P hardware/qcom-caf/sm8150/display ${changes[@]}&
 }
 
 function pull() {
