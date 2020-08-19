@@ -9,7 +9,7 @@ repo sync -q -j$( nproc --all ) --force-sync --force-remove-dirty -c --no-clone-
 
 function fetch() {
 git -C device/xiaomi/davinci/ fetch -q https://github.com/sm6150-dev/android_device_xiaomi_davinci && git -C device/xiaomi/davinci/ checkout FETCH_HEAD
-git -C device/xiaomi/sm6150-common/ fetch -q https://github.com/sm6150-dev/android_device_xiaomi_sm6150-common && git -C device/xiaomi/sm6150-common/ checkout FETCH_HEAD
+git -C device/xiaomi/sm6150-common/ fetch -q https://github.com/sm6150-dev/android_device_xiaomi_sm6150-common refs/for/lineage-17.1 && git -C device/xiaomi/sm6150-common/ checkout FETCH_HEAD
 info "Fetching latest sm6150-dev source..."
 clear
 }
@@ -31,7 +31,7 @@ function pull() {
 repopick -p 278063 -P hardware/qcom-caf/sm8150/audio # hal: Add tfa98xx feedback extension
 #repopick -p 275821 # interfaces: Fix blueprint generation
 #repopick -p 272451 # org.ifaa.android.manager: Add ifaa apis to unrestricted greylist
-#repopick -p 277273 # MediaProvider: Check hidden directories recursively
+repopick -p 277273 # MediaProvider: Check hidden directories recursively
 repopick -p 282518 # Launcher3: improve protected app names style
 info "Pulling commits from gerrit..."
 clear
@@ -61,7 +61,7 @@ success
 }
 
 sync
-fetch
+#fetch
 pick
 pull
 topic
