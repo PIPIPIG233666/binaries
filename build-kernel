@@ -26,7 +26,7 @@ command make O=~/out \
 
 export PATH=~/bin/toolchain/clang/clang-r353983c1/bin:~/bin/toolchain/gcc-64/bin:~/bin/toolchain/gcc-32/bin/:~/bin/toolchain/dtc:${PATH}
 
-command make -j4 O=~/out \
+command make -j$(nproc) O=~/out \
   ARCH=arm64 \
   CC=clang \
   CLANG_TRIPLE=aarch64-linux-gnu- \
