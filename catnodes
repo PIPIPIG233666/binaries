@@ -1,0 +1,5 @@
+#!/bin/bash
+# Usage: catnodes $nodes
+#
+nodes=$1
+while true; do echo ${nodes}=`command adb shell cat ${nodes}`; sleep 1s; done
