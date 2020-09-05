@@ -18,7 +18,6 @@ function pick() {
 set -e
 changes=(
 #272303 # DozeSensors: only use proximity sensor if supported
-266130 # FODCircleView: Add Support for custom FP pressed icon
 #280082 # FingerprintService: hide InDisplayFingerprintView on Error
 #281412 # SystemUI: Don't re add brightness slider if its already present
 )
@@ -40,7 +39,6 @@ clear
 function topic() {
 #repopick -t ten-firewall
 #repopick -t xiaomi-power-hal
-#repopick -t ten-dtbo
 repopick -t screen-off-fod
 info "Picking topics from gerrit..."
 clear
@@ -61,7 +59,7 @@ success
 }
 
 sync
-#fetch
-pick
+fetch
+#pick
 pull
 topic
