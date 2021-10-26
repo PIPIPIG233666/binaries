@@ -2,12 +2,10 @@
 #
 # Usage: ~/bin/build-kernel $device $log
 #
-device="$1"
-log="$2"
+device="davinci"
+log="log.txt"
 
-virtualenv2 venv
-source venv/bin/activate
-source ~/bin/helper
+source ~/binaries/helper
 export USE_CCACHE=1
 /usr/bin/ccache -M 20G
 DATE_START=$(date +"%s")
@@ -15,7 +13,7 @@ DATE_START=$(date +"%s")
 MONTH=$(date -d "$D" '+%m')
 YEAR=$(date -d "$D" '+%Y')
 
-OS="10.0.0"
+OS="11.0.0"
 SPL="${YEAR}-${MONTH}"
 
 rm -rf ~/out/arch/arm64/boot/dts/xiaomi/
@@ -24,7 +22,7 @@ command make O=~/out \
   ARCH=arm64 \
   vendor/lineage_${device}_defconfig
 
-export PATH=~/bin/toolchain/clang/clang-r353983c1/bin:~/bin/toolchain/gcc-64/bin:~/bin/toolchain/gcc-32/bin/:~/bin/toolchain/dtc:${PATH}
+export PATH=~/binaries/toolchain/clang/bin:~/binaries/toolchain/gcc-64/bin:~/binaries/toolchain/gcc-32/bin/:~/binaries/toolchain/dtc:${PATH}
 
 command make -j$(nproc) O=~/out \
   ARCH=arm64 \
@@ -60,5 +58,3 @@ header "Build Completed in:"
 DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 success "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
-
-~/bin/flash

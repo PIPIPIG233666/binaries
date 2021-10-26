@@ -1,6 +1,6 @@
 [submodule "mkbootimg"]
-	path = mkbootimg
-	url = git@github.com:osm0sis/mkbootimg.git
+	path = mkbootimg 
+	url = https://github.com/osm0sis/mkbootimg.git
 [submodule "jadx"]
 	path = jadx
 	url = git@github.com:skylot/jadx.git
@@ -13,3 +13,6 @@
 [submodule "libufdt"]
 	path = libufdt
 	url = https://android.googlesource.com/platform/system/libufdt
+[submodule "clang"]
+	path = toolchain/clang
+	url = https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-6443078.git
