@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Copyright (C) 2020 Pig <pig.priv@gmail.com>
+# Copyright (C) 2022 Pig <pig.priv@gmail.com>
 #
 # Simple script to import/update kernel modules
-# Version 0.3
+# Version 0.4
 #
 
 source ~/bin/helper
@@ -56,6 +56,12 @@ if [ $num = '1' ]; then
     elif [ $num = '6' ]; then
     mod=camera-kernel
     dir=$tp/camera
+    elif [ $num = '7' ]; then
+    mod=display-drivers
+    dir=$tp/display
+    elif [ $num = '8' ]; then
+    mod=video-driver
+    dir=$tp/video
     else die "Invalid target input, aborting!"
 fi
 
@@ -70,7 +76,7 @@ function addremote() {
     $rma/$mod $rm/$wl/$mod
     elif [ $num -eq '5' ]; then
     $rma/$mod $rm/$qc-$os/$mod
-    elif [ $num -eq '4' ] || [ $num -eq '6' ] ; then
+    elif [ $num -eq '4' ] || [ $num -eq '6' ] || [ $num -eq '7' ] || [ $num -eq '8' ]; then
     $rma/$mod $rm/$os/$mod
     fi
 }
@@ -78,10 +84,10 @@ function addremote() {
 # Initialize
 function init() {
 header "Available modules"
-info "1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel\n5.data-kernel\n6.camera-kernel"
+info "1.qcacld-3.0\n2.qca-wifi-host-cmn\n3.fw-api\n4.audio-kernel\n5.data-kernel\n6.camera-kernel\n7.display-drivers\n8.video-driver"
 read -p "Target kernel module: " num
 case $num in 
-    1 | 2 | 3 | 4 | 5 | 6)
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)
     read -p "Target tag / branch: " br
     read -p "Import (i) / Update (u): " option
     if [ $option != u ]; then
@@ -96,7 +102,7 @@ function import() {
     addremote
     success "Add remote for target module ${mod} done."
     case $mod in
-        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel)
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel | display-drivers | video-driver)
         readcmd
         success "Import from target ${br} for target ${mod} done."
     esac
@@ -105,7 +111,7 @@ function import() {
 # Update modules
 function update() {
     case $mod in
-        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel)
+        qcacld-3.0 | qca-wifi-host-cmn | fw-api | audio-kernel | data-kernel | camera-kernel | display-drivers | video-driver)
         readcmd
         success "Update to target ${br} for target module ${mod} done."
     esac
