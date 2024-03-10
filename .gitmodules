@@ -16,3 +16,6 @@
 [submodule "clang"]
 	path = toolchain/clang
 	url = https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-6443078.git
+[submodule "jenkins_script"]
+	path = jenkins_script
+	url = https://github.com/PIPIPIG233666/jenkins_script
