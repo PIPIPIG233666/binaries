@@ -14,10 +14,8 @@ for p in $PARTITIONS; do
     IMG="$p.img"
     OUT="$OUTPUT_DIR/$p"
 
-    # ✅ Check if file already exists and matches checksum
-    if [[ -f "$ZST" && -n "$CHECKSUM_FILE" ]]; then
-        EXPECTED=$(grep "$ZST" "$CHECKSUM_FILE" | awk '{print $1}')
-        ACTUAL=$(sha256sum "$ZST" | awk '{print $1}')
+    # ✅ Check if file already exists
+    if [[ -f "$ZST" ]]; then
         if [[ "$EXPECTED" == "$ACTUAL" ]]; then
             echo "✅ $ZST exists and checksum matches, skipping download."
         else
