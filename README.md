@@ -76,4 +76,22 @@ The script looks for a file ending in `.img-ramdisk` in the current directory, d
 
 It will also clean up the intermediate `ramdisk.cpio` and original `.img-ramdisk` files.
 
+#### flash
+This interactive script flashes first stage boot partitions to a connected device.
+
+**Dependencies:**
+- `adb` and `fastboot` must be installed and in your `PATH`.
+- It sources a `helper` script which is expected to be in `~/bin`.
+
+**Usage:**
+The script will first prompt you for confirmation. If you agree, it will:
+1.  Navigate to the `~/out/` directory.
+2.  Reboot the device into the bootloader.
+3.  Flash partitions if they exist.
+4.  Reboot the device.
+
+```bash
+./flash
+```
+
 
