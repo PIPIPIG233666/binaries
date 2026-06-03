@@ -2,7 +2,7 @@
 
 # --- Default Configuration ---
 GAPPS=true
-REL="bp2a"
+REL="bp4a"
 TYPE="userdebug"
 DEVICE="dodge"
 TARGET_BASE=""
